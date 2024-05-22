@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+
 @SuppressWarnings("Duplicates")
 public class Palette extends Application {
 
@@ -58,6 +59,10 @@ public class Palette extends Application {
         bleu = new Button("Bleu");
 
         /* VOTRE CODE ICI */
+
+        vert.setOnAction(event -> texteDuBas.setStyle("-fx-text-fill:rgba(0, 255, 0, 0.5)"));
+        rouge.setOnAction(event -> texteDuBas.setStyle("-fx-text-fill:rgba(255, 0, 0, 0.5)"));
+        bleu.setOnAction(event -> texteDuBas.setStyle("-fx-text-fill:rgba(0, 0, 255, 0.5)"));
 
         boutons.getChildren().addAll(vert, rouge, bleu);
 
