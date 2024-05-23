@@ -32,7 +32,7 @@ public class Palette extends Application {
     private Pane panneau = new Pane();
     private HBox bas = new HBox();
 
-    private void ButtonClickRed(Event event){
+    private void buttonClickRed(Event event){
         System.out.println("ButtonClick");
         String couleur="Rouge";
         nbRouge+=1;
@@ -40,14 +40,14 @@ public class Palette extends Application {
         panneau.setStyle("-fx-background-color: red;");
     }
 
-    private void ButtonClickBlue(Event event){
+    private void buttonClickBlue(Event event){
         String couleur="Bleu";
         nbBleu+=1;
         label.setText(couleur+" choisi "+nbBleu+" fois.");
         panneau.setStyle("-fx-background-color: blue;");
     }
 
-    private void ButtonClickGreen(Event event){
+    private void buttonClickGreen(Event event){
         String couleur="Vert";
         nbVert+=1;
         label.setText(couleur+" choisi "+nbVert+" fois.");
@@ -65,9 +65,9 @@ public class Palette extends Application {
 
 
 
-        vert.addEventHandler(MouseEvent.MOUSE_CLICKED, eventGreen -> ButtonClickGreen(eventGreen));
-        rouge.addEventHandler(MouseEvent.MOUSE_CLICKED, eventRouge -> ButtonClickRed(eventRouge));
-        bleu.addEventHandler(MouseEvent.MOUSE_CLICKED, eventBleu -> ButtonClickBlue(eventBleu));
+        vert.addEventHandler(MouseEvent.MOUSE_CLICKED, eventGreen -> buttonClickGreen(eventGreen));
+        rouge.addEventHandler(MouseEvent.MOUSE_CLICKED, eventRouge -> buttonClickRed(eventRouge));
+        bleu.addEventHandler(MouseEvent.MOUSE_CLICKED, eventBleu -> buttonClickBlue(eventBleu));
 
         root.setTop(label);
         root.setCenter(panneau);

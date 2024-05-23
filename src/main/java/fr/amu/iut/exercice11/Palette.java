@@ -1,6 +1,9 @@
-package fr.amu.iut.exercice1;
+package fr.amu.iut.exercice11;
 
 import javafx.application.Application;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -35,11 +39,73 @@ public class Palette extends Application {
     private Label texteDuBas;
 
 
+    private IntegerProperty nbFois;
+    private StringProperty message;
+
+    private StringProperty couleurPanneau;
+    private StringProperty couleurTxtDuBas;
+
+    public Palette(){
+        nbFois = new SimpleIntegerProperty();
+        message = new SimpleStringProperty();
+        couleurPanneau = new SimpleStringProperty("#000000");
+        couleurTxtDuBas = new SimpleStringProperty("#000000");
+    }
+
+    public int getNbFois() {
+        return nbFois.get();
+    }
+
+    public IntegerProperty nbFoisProperty() {
+        return nbFois;
+    }
+
+    public void setNbFois(int nbFois) {
+        this.nbFois.set(nbFois);
+    }
+
+    public String getMessage() {
+        return message.get();
+    }
+
+    public StringProperty messageProperty() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message.set(message);
+    }
+
+
+    public String getCouleurPanneau() {
+        return couleurPanneau.get();
+    }
+
+    public StringProperty couleurPanneauProperty() {
+        return couleurPanneau;
+    }
+
+    public void setCouleurPanneau(String couleurPanneau) {
+        this.couleurPanneau.set(couleurPanneau);
+    }
+
+    private void createBindings(){
+        BooleanProperty pasEncoreDeClic = new SimpleBooleanProperty();
+        pasEncoreDeClic.bind(Bindings.equal(nbFois, 0));
+        texteDuHaut.textProperty().bind(Bindings.when(pasEncoreDeClic).then("Cliquez sur un bouton.").otherwise(Bindings.concat(message, " choisi ", nbFois, " fois.")));
+        panneau.styleProperty().bind(couleurPanneau);
+        texteDuBas.textProperty().bind(Bindings.when(pasEncoreDeClic).then("").otherwise(Bindings.concat(message, " est une jolie couleur !")));
+    }
+
     @Override
     public void start(Stage primaryStage) {
+
+
         root = new BorderPane();
 
         texteDuHaut = new Label();
+
+
         texteDuHaut.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         BorderPane.setAlignment(texteDuHaut, Pos.CENTER);
 
@@ -54,15 +120,45 @@ public class Palette extends Application {
         bas.setAlignment(Pos.CENTER_RIGHT);
         bas.getChildren().addAll(boutons, texteDuBas);
 
+
         vert = new Button("Vert");
         rouge = new Button("Rouge");
         bleu = new Button("Bleu");
 
         /* VOTRE CODE ICI */
+        createBindings();
+;
 
-        vert.setOnAction(event -> texteDuBas.setStyle("-fx-text-fill:rgba(0, 255, 0, 0.5)"));
-        rouge.setOnAction(event -> texteDuBas.setStyle("-fx-text-fill:rgba(255, 0, 0, 0.5)"));
-        bleu.setOnAction(event -> texteDuBas.setStyle("-fx-text-fill:rgba(0, 0, 255, 0.5)"));
+
+
+
+        vert.setOnAction(event -> {
+            nbVert++;
+            setCouleurPanneau("-fx-background-color: #08CC0A");
+            setMessage("Vert");
+            setNbFois(nbVert);
+//            texteDuHaut.setText(getMessage() + " choisi "+ getNbFois() +" fois.");
+        });
+
+        rouge.setOnAction(event -> {
+            nbRouge++;
+            setCouleurPanneau("-fx-background-color: #FF0000");
+
+            setMessage("Rouge");
+            setNbFois(nbRouge);
+//            texteDuHaut.setText("Rouge choisi "+ getNbFois() +" fois.");
+        });
+
+
+        bleu.setOnAction(event -> {
+            nbBleu++;
+            setCouleurPanneau("-fx-background-color: #0620FB");
+            setMessage("Bleu");
+            setNbFois(nbBleu);
+//            texteDuHaut.setText("Bleu choisi "+ getNbFois() +" fois.");
+        });
+
+
 
         boutons.getChildren().addAll(vert, rouge, bleu);
 
