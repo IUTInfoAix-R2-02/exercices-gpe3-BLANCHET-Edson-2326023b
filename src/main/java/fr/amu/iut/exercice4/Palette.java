@@ -37,7 +37,9 @@ public class Palette extends Application {
         String couleur="Rouge";
         nbRouge+=1;
         label.setText(couleur+" choisi "+nbRouge+" fois.");
+
         panneau.setStyle("-fx-background-color: red;");
+
     }
 
     private void buttonClickBlue(Event event){

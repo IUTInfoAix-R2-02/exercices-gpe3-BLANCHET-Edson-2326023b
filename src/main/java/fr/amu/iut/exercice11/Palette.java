@@ -38,18 +38,16 @@ public class Palette extends Application {
 
     private Label texteDuBas;
 
-
     private IntegerProperty nbFois;
     private StringProperty message;
 
     private StringProperty couleurPanneau;
-    private StringProperty couleurTxtDuBas;
+
 
     public Palette(){
         nbFois = new SimpleIntegerProperty();
         message = new SimpleStringProperty();
-        couleurPanneau = new SimpleStringProperty("#000000");
-        couleurTxtDuBas = new SimpleStringProperty("#000000");
+        couleurPanneau = new SimpleStringProperty("#FFFFFF");
     }
 
     public int getNbFois() {
@@ -89,12 +87,17 @@ public class Palette extends Application {
         this.couleurPanneau.set(couleurPanneau);
     }
 
+
+
+
     private void createBindings(){
         BooleanProperty pasEncoreDeClic = new SimpleBooleanProperty();
         pasEncoreDeClic.bind(Bindings.equal(nbFois, 0));
         texteDuHaut.textProperty().bind(Bindings.when(pasEncoreDeClic).then("Cliquez sur un bouton.").otherwise(Bindings.concat(message, " choisi ", nbFois, " fois.")));
-        panneau.styleProperty().bind(couleurPanneau);
+        panneau.styleProperty().bind(Bindings.concat("-fx-background-color:", couleurPanneau));
+        texteDuBas.styleProperty().bind(Bindings.concat("-fx-text-fill:", couleurPanneau));
         texteDuBas.textProperty().bind(Bindings.when(pasEncoreDeClic).then("").otherwise(Bindings.concat(message, " est une jolie couleur !")));
+
     }
 
     @Override
@@ -134,7 +137,7 @@ public class Palette extends Application {
 
         vert.setOnAction(event -> {
             nbVert++;
-            setCouleurPanneau("-fx-background-color: #08CC0A");
+            setCouleurPanneau("#08CC0A");
             setMessage("Vert");
             setNbFois(nbVert);
 //            texteDuHaut.setText(getMessage() + " choisi "+ getNbFois() +" fois.");
@@ -142,8 +145,7 @@ public class Palette extends Application {
 
         rouge.setOnAction(event -> {
             nbRouge++;
-            setCouleurPanneau("-fx-background-color: #FF0000");
-
+            setCouleurPanneau("#FF0000");
             setMessage("Rouge");
             setNbFois(nbRouge);
 //            texteDuHaut.setText("Rouge choisi "+ getNbFois() +" fois.");
@@ -152,7 +154,7 @@ public class Palette extends Application {
 
         bleu.setOnAction(event -> {
             nbBleu++;
-            setCouleurPanneau("-fx-background-color: #0620FB");
+            setCouleurPanneau("#0620FB");
             setMessage("Bleu");
             setNbFois(nbBleu);
 //            texteDuHaut.setText("Bleu choisi "+ getNbFois() +" fois.");
